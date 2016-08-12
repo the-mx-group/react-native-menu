@@ -4,6 +4,7 @@ let nextID = 1;
 
 module.exports = (React, ReactNative, { constants, model, styles }) => {
   const {
+    Dimensions,
     NativeModules: { UIManager },
     TouchableWithoutFeedback,
     ScrollView,
@@ -28,10 +29,10 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     </ScrollView>
   );
 
-  const makeOptions = (options, { top, right }) => {
+  const makeOptions = (options, position) => {
     const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
     return (
-      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, { top, right }]}>
+      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, position]}>
         { renderOptionsContainer(options) }
       </AnimatedOptionsContainer>
     );
@@ -154,9 +155,15 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       const options = this._options[name];
       const { w: menuWidth, px: menuPX, py: menuPY } = menuMeasurements;
       const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
-      const optionsTop = menuPY - ownPY;
-      const optionsRight = ownWidth + ownPX - menuPX - menuWidth;
-      return makeOptions(options, { top: optionsTop, right: optionsRight });
+      const offsetY = menuPY - ownPY;
+      const offsetX = ownWidth + ownPX - menuPX - menuWidth;
+      const side = menuPX < (Dimensions.get('window').width / 2) ? 'left' : 'right';
+      console.log(menuPY, menuPX, Dimensions.get('window').width, side);
+
+      return makeOptions(options, {
+        top: offsetY,
+        left: offsetX,
+      });
     },
 
     render() {
