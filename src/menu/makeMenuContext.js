@@ -155,14 +155,17 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
       const options = this._options[name];
       const { w: menuWidth, px: menuPX, py: menuPY } = menuMeasurements;
       const { w: ownWidth, px: ownPX, py: ownPY } = this._ownMeasurements;
-      const offsetY = menuPY - ownPY;
-      const offsetX = ownWidth + ownPX - menuPX - menuWidth;
       const side = menuPX < (Dimensions.get('window').width / 2) ? 'left' : 'right';
-      console.log(menuPY, menuPX, Dimensions.get('window').width, side);
+      const offsetY = menuPY - ownPY;
+      let offsetX = 0;
+      if (side === 'left')
+        offsetX = menuPX - ownPX;
+      else
+        offsetX = (ownWidth + ownPX) - menuPX - menuWidth;
 
       return makeOptions(options, {
         top: offsetY,
-        left: offsetX,
+        [side]: offsetX,
       });
     },
 
