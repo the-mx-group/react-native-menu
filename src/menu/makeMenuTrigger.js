@@ -29,7 +29,7 @@ module.exports = (React, ReactNative, { model }) => {
         ));
       }
       return (
-        <TouchableHighlight onPress={this.onPress} {...this.props}>
+        <TouchableHighlight onPress={() => { requestAnimationFrame(this.onPress); }} {...this.props}>
           <View style={this.props.style}>
             { this.props.children }
           </View>
