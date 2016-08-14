@@ -11,6 +11,7 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     View
   } = ReactNative;
   const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
+  const HeightAnimatedOptionsContainer = require('./makeHeightAnimatedOptionsContainer')(React, ReactNative);
 
   // Calls a function once, then never again.
   const once = (fn) => {
@@ -30,11 +31,13 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
   );
 
   const makeOptions = (options, position) => {
-    const { optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
+    const { type, optionsContainerStyle, renderOptionsContainer = defaultOptionsContainerRenderer} = options.props;
+    let Container = type === 'dropdown' ? HeightAnimatedOptionsContainer : AnimatedOptionsContainer;
+
     return (
-      <AnimatedOptionsContainer style={[ styles.optionsContainer, optionsContainerStyle, position]}>
+      <Container style={[ styles.optionsContainer, optionsContainerStyle, position]}>
         { renderOptionsContainer(options) }
-      </AnimatedOptionsContainer>
+      </Container>
     );
   };
 
