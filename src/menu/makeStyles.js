@@ -3,6 +3,9 @@ module.exports = (ReactNative) => {
   const window = Dimensions.get('window');
 
   return StyleSheet.create({
+    triggerContainer: {
+      flex: 1,
+    },
     optionsContainer: {
       position: 'absolute',
       borderRadius: 2,

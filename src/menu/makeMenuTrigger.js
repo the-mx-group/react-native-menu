@@ -1,4 +1,4 @@
-module.exports = (React, ReactNative, { model }) => {
+module.exports = (React, ReactNative, { model, styles }) => {
   const { TouchableHighlight, View } = ReactNative;
 
   const MenuTrigger = React.createClass({
@@ -37,7 +37,7 @@ module.exports = (React, ReactNative, { model }) => {
               this.props.onPress();
           }}
         >
-          <View style={this.props.style}>
+          <View style={[styles.triggerContainer, this.props.containerStyle]}>
             { this.props.children }
           </View>
         </TouchableHighlight>
