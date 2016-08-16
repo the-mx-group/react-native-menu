@@ -13,17 +13,6 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
   const AnimatedOptionsContainer = require('./makeAnimatedOptionsContainer')(React, ReactNative);
   const HeightAnimatedOptionsContainer = require('./makeHeightAnimatedOptionsContainer')(React, ReactNative);
 
-  // Calls a function once, then never again.
-  const once = (fn) => {
-    let called = false;
-    return (...args) => {
-      if (!called) {
-        called = true;
-        fn(...args);
-      }
-    };
-  };
-
   const defaultOptionsContainerRenderer = (options) => (
     <ScrollView>
       {options}
@@ -119,8 +108,6 @@ module.exports = (React, ReactNative, { constants, model, styles }) => {
     componentWillMount() {
       this._menus = {};
       this._options = {};
-      // Only do this once on initial layout.
-      this.onLayout = once(this.onLayout);
     },
     onLayout() {
       const handle = ReactNative.findNodeHandle(this.refs.Container);
